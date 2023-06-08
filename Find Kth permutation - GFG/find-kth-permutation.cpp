@@ -11,6 +11,30 @@ using namespace std;
 class Solution
 {
 public:
+    
+    void next_perm(vector<int>&v){
+        int k=-1;
+        int n=v.size();
+        for(int i=n-2;i>=0;i--){
+            if(v[i]<v[i+1]){
+                k=i;break;
+            }
+        }
+        
+        if(k==-1){
+            reverse(v.begin(),v.end());
+        }
+        
+        for(int i=n-1;i>k;i--){
+            if(v[i]>v[k]){
+                swap(v[i],v[k]);
+                break;
+            }
+        }
+        
+        reverse(v.begin()+k+1,v.end());
+    }
+    
     string kthPermutation(int n, int k)
     {
         vector<int>v(n);
@@ -19,7 +43,7 @@ public:
         }
         
         for(int i=1;i<k;i++){
-            next_permutation(v.begin(),v.end());
+            next_perm(v);
         }
         
         string s="";
