@@ -10,16 +10,9 @@ public:
         
         for(int i=0;i<n;i++) ans[i]=a[i];
         
-        if(ans[n-1]<9){
-            ans[n-1]++;
-            return ans;
-        }
+        int carry=1,sum;
         
-        int carry=(ans[n-1]+1)/10;
-        int sum=(ans[n-1]+1)%10;
-        ans[n-1]=sum;
-        int i;
-        for(i=n-2;i>=0;i--){
+        for(int i=n-1;i>=0;i--){
             sum=(ans[i]+carry)%10;
             carry=(ans[i]+carry)/10;
             
