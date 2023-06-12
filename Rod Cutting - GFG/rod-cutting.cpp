@@ -10,22 +10,27 @@ using namespace std;
 
 class Solution{
   public:
-    int rec(int prices[],int i,int rod,vector<vector<int>>&dp){
-        if(i==0) return prices[0]*rod;
-        
-        if(dp[i][rod]!=-1) return dp[i][rod];
-        
-        int cut=-1e9;
-        if(rod>=i+1) cut=prices[i]+rec(prices,i,rod-i-1,dp);
-        
-        int notcut=rec(prices,i-1,rod,dp);
-        
-        return dp[i][rod]=max(cut,notcut);
-    }
     int cutRod(int price[], int n) {
-        vector<vector<int>>dp(n,vector<int>(n+1,-1));
+        vector<int>dp(n+1,0);
         
-        return rec(price,n-1,n,dp);
+        for(int i=0;i<=n;i++){
+            dp[i]=price[0]*i;
+        }
+        
+        for(int i=1;i<n;i++){
+            vector<int>curr(n+1,0);
+            for(int rod=0;rod<=n;rod++){
+                int cut=-1e9;
+                if(rod>=i+1) cut=price[i]+curr[rod-i-1];
+                
+                int notcut=dp[rod];
+                
+                curr[rod]=max(cut,notcut);
+            }
+            dp=curr;
+        }
+        
+        return dp[n];
     }
 };
 
