@@ -102,43 +102,43 @@ class Solution{
     
     vector<int> postOrder(Node* node) {
         //using 2 stacks
-        stack<Node*>st1,st2;
-        st1.push(node);
+        // stack<Node*>st1,st2;
+        // st1.push(node);
         
-        while(!st1.empty()){
-            Node* x=st1.top();
-            st1.pop();
-            if(x->left) st1.push(x->left);
-            if(x->right) st1.push(x->right);
+        // while(!st1.empty()){
+        //     Node* x=st1.top();
+        //     st1.pop();
+        //     if(x->left) st1.push(x->left);
+        //     if(x->right) st1.push(x->right);
             
-            st2.push(x);
+        //     st2.push(x);
             
-        }
-        
-        vector<int>v;
-        while(!st2.empty()){
-            Node *x=st2.top();
-            v.push_back(x->data);
-            st2.pop();
-        }
-        return v;
-        
-        
-        // //using single stack
-        // stack<Node*>stk;
-        // stk.push(node);
-        // vector<int>v;
-        // while(!stk.empty()){
-        //     Node*x=stk.top();
-        //     stk.pop();
-        //     if(x->left) {stk.push(x->left);}
-            
-        //     if(x->right){ stk.push(x->right);}
-            
-        //     v.push_back(x->data);
         // }
-        // reverse(v.begin(),v.end());
+        
+        // vector<int>v;
+        // while(!st2.empty()){
+        //     Node *x=st2.top();
+        //     v.push_back(x->data);
+        //     st2.pop();
+        // }
         // return v;
+        
+        
+        //using single stack
+        stack<Node*>stk;
+        stk.push(node);
+        vector<int>v;
+        while(!stk.empty()){
+            Node*x=stk.top();
+            stk.pop();
+            if(x->left) {stk.push(x->left);}
+            
+            if(x->right){ stk.push(x->right);}
+            
+            v.push_back(x->data);
+        }
+        reverse(v.begin(),v.end());
+        return v;
     }
 };
 
