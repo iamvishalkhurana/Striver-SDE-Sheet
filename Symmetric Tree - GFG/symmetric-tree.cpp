@@ -112,7 +112,9 @@ class Solution{
     }
     bool isSymmetric(struct Node* root)
     {
-	    return sym(root,root);
+        if(!root) return true;
+        
+	    return sym(root->left,root->right);
     }
 };
 
