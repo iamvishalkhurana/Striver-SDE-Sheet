@@ -37,33 +37,21 @@ struct Node
 class Solution
 {
     public:
-    bool getPath(Node* root,int n,vector<Node*>&v){
-        if(!root) return false;
-        
-        v.push_back(root);
-        if(root->data==n) return true;
-        
-        if(getPath(root->left,n,v) || getPath(root->right,n,v)) return true;
-        
-        v.pop_back();
-        return false;
-    }
+    
     Node* lca(Node* root ,int n1 ,int n2 )
     {
-       vector<Node*>v1,v2;
-       getPath(root,n1,v1);
-       getPath(root,n2,v2);
-       int n=v1.size(),m=v2.size();
-       int i=0,j=0;
-       Node* lcan;
-       while(i<n && j<m){
-           if(v1[i]==v2[j]) lcan=v1[i];
-           
-           else return lcan;
-           
-           i++;j++;
+       if(root==NULL || root->data==n1 || root->data==n2) return root;
+       
+       Node* left=lca(root->left,n1,n2);
+       Node* right=lca(root->right,n1,n2);
+       
+       if(left==NULL){
+           return right;
        }
-       return lcan;
+       else if(right==NULL){
+           return left;
+       }
+       return root;
     }
 };
 
