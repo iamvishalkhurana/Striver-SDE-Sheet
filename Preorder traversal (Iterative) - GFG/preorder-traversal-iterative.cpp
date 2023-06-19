@@ -99,17 +99,34 @@ class Solution{
     public:
     vector<int> preOrder(Node* root)
     {
-        stack<Node*>stk;
-        stk.push(root);
-        vector<int>v;
-        while(!stk.empty()){
-            Node*x=stk.top();
-            stk.pop();
-            v.push_back(x->data);
-            if(x->right) stk.push(x->right);
-            if(x->left) stk.push(x->left);
+        vector<int>inorder;
+
+        if(!root) return inorder;
+
+        Node* curr=root;
+        while(curr){
+            
+            if(!curr->left){
+                inorder.push_back(curr->data);
+                curr=curr->right;
+            }
+            else{
+                Node* prev=curr->left;
+                while(prev->right && prev->right!=curr){
+                    prev=prev->right;
+                }
+                if(!prev->right){
+                    inorder.push_back(curr->data);
+                    prev->right=curr;
+                    curr=curr->left;
+                }
+                else{
+                    prev->right=NULL;
+                    curr=curr->right;
+                }
+            }
         }
-        return v;
+        return inorder;
     }
 };
 
