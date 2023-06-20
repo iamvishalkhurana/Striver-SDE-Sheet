@@ -109,20 +109,19 @@ struct Node {
 
 class Solution{
   public:
-    Node* succ=NULL;
+    
     Node * inOrderSuccessor(Node *root, Node *x)
     {
-        if(!root) return NULL;
-        
-        if(root->data > x->data){
-            succ=root;
-            inOrderSuccessor(root->left,x);
+        Node* succ=NULL;
+        while(root){
+            if(root->data > x->data){
+                succ=root;
+                root=root->left;
+            }
+            else{
+                root=root->right;
+            }
         }
-        
-        else{
-            inOrderSuccessor(root->right,x);
-        }
-        
         return succ;
     }
 };
