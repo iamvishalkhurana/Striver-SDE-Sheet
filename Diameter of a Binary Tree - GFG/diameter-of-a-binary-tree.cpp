@@ -93,20 +93,20 @@ struct Node
 
 class Solution {
   public:
-    int height(Node *root,int &diam){
+    int diam=INT_MIN;
+    int height(Node *root){
         if(!root) return 0;
         
-        int lh=height(root->left,diam);
-        int rh=height(root->right,diam);
+        int lh=height(root->left);
+        int rh=height(root->right);
         
         diam=max(diam,lh+rh+1);
         
         return 1+max(lh,rh);
     }
     int diameter(Node* root) {
-        int max_diameter=INT_MIN;
-        height(root,max_diameter);
-        return max_diameter;
+        height(root);
+        return diam;
         
     }
 };
