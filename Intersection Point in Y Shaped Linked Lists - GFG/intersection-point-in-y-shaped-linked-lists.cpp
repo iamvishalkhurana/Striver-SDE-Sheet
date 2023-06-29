@@ -117,6 +117,7 @@ int intersectPoint(Node* head1, Node* head2)
 {
     int n=0,m=0;
     Node *temp1=head1,*temp2=head2;
+    
     while(temp1 || temp2){
         if(temp1){
             n++;
@@ -127,16 +128,17 @@ int intersectPoint(Node* head1, Node* head2)
             temp2=temp2->next;
         }
     }
+    
     int k=abs(n-m);
     
     if(n>m){
         while(k--){
-            if(head1) head1=head1->next;
+            head1=head1->next;
         }
     }
     else{
         while(k--){
-            if(head2) head2=head2->next;
+            head2=head2->next;
         }
     }
     
