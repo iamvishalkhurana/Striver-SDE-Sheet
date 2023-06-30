@@ -21,9 +21,9 @@ class Solution {
     vector<int> dfsOfGraph(int V, vector<int> adj[]) {
         vector<bool>visited(V,0);
         vector<int>DFS;
-        
-        if(!visited[0]) dfs(adj,0,visited,DFS);
-        
+        for(int i=0;i<V;i++){
+            if(!visited[i]) dfs(adj,i,visited,DFS);
+        }
         return DFS;
     }
 };
