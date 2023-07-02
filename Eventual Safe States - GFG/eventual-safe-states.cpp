@@ -10,35 +10,33 @@ using namespace std;
 
 class Solution {
   public:
-     bool detect(vector<int>adj[],int i,vector<bool>&visited,vector<bool>&path){
+     
+    bool detect(vector<int>adj[],int i,vector<int>&visited){
             visited[i]=1;
-            path[i]=true;
             for(int x:adj[i]){
                 if(!visited[x]){
-                    if(detect(adj,x,visited,path)==true) return true;
+                    if(detect(adj,x,visited)==true) return true;
                     
                 }
-                else if(path[x]) return true;
+                else if(visited[x]==1) return true;
             }
             
-            path[i]=false;
-            
+            visited[i]=2;
             return false;
             
         }
         
     vector<int> eventualSafeNodes(int V, vector<int> adj[]) {
-        vector<bool>visited(V,0);
-            vector<bool>path(V,0);
+            vector<int>visited(V,0);
             for(int i=0;i<V;i++){
                 if(!visited[i]){
-                    detect(adj,i,visited,path);
+                    detect(adj,i,visited);
                 }
             }
             
             vector<int>x;
             for(int i=0;i<V;i++){
-                if(path[i]==0){
+                if(visited[i]==2){
                     x.push_back(i);
                 }
             }
