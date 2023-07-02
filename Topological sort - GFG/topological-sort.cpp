@@ -7,26 +7,36 @@ class Solution
 {
 	public:
 	
-	void dfs(vector<int>adj[],int i,vector<bool>&visited,vector<int>&topo){
-	    visited[i]=1;
-	    for(auto x:adj[i]){
-	        if(!visited[x]){
-	            dfs(adj,x,visited,topo);
-	        }
-	    }
-	    topo.push_back(i);
-	}
+	
 	vector<int> topoSort(int V, vector<int> adj[]) 
 	{
-	    vector<bool>visited(V,0);
-	    vector<int>topo;
+	    vector<int>topo,indegree(V,0);
+	    
 	    for(int i=0;i<V;i++){
-	        if(!visited[i]){
-	            dfs(adj,i,visited,topo);
+	        for(int j:adj[i]){
+	            indegree[j]++;
 	        }
 	    }
-	    reverse(topo.begin(),topo.end());
+	    
+	    queue<int>q;
+	    for(int i=0;i<V;i++){
+	        if(indegree[i]==0){
+	            q.push(i);
+	        }
+	    }
+	    
+	    while(!q.empty()){
+	        int x=q.front();q.pop();
+	        topo.push_back(x);
+	        for(int t:adj[x]){
+	            indegree[t]--;
+	            if(indegree[t]==0){
+	                q.push(t);
+	            }
+	        }
+	    }
 	    return topo;
+	    
 	}
 };
 
