@@ -5,24 +5,15 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
     private:
-        bool detect(vector<int>adj[],int i,vector<bool>&visited){
+        bool detect(vector<int>adj[],int i,vector<bool>&visited,int par){
             visited[i]=1;
-            queue<pair<int,int>>q;
-            q.push({i,-1});
             
-            while(!q.empty()){
-                auto temp=q.front();q.pop();
-                
-                int node=temp.first,parent=temp.second;
-                
-                for(auto x:adj[node]){
-                    if(!visited[x]){
-                        visited[x]=1;
-                        q.push({x,node});
-                    }
-                    else if(parent!=x){
-                        return true;
-                    }
+            for(auto x:adj[i]){
+                if(!visited[x]){
+                    if(detect(adj,x,visited,i)==true) return true;
+                }
+                else if(par!=x){
+                    return true;
                 }
             }
             return false;
@@ -37,7 +28,7 @@ class Solution {
             
             for(int i=0;i<V;i++){
                 if(!visited[i]){
-                    if(detect(adj,i,visited)==true){
+                    if(detect(adj,i,visited,-1)==true){
                         return true;
                     }
                 }
