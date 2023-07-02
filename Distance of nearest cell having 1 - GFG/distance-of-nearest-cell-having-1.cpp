@@ -13,6 +13,7 @@ class Solution
 	    int n=grid.size(),m=grid[0].size();
 	    
 	    vector<vector<int>>ans(n,vector<int>(m,m*n));
+	    vector<vector<bool>>visited(n,vector<bool>(m,0));
 	    
 	    vector<int>r={0,1,0,-1};
 	    vector<int>c={-1,0,1,0};
@@ -23,6 +24,7 @@ class Solution
 	            if(grid[i][j]==1){
 	                ans[i][j]=0;
 	                q.push({i,j});
+	                visited[i][j]=1;
 	            }
 	        }
 	    }
@@ -37,9 +39,9 @@ class Solution
 	            for(int j=0;j<4;j++){
 	                int x=r[j]+row,y=c[j]+col;
 	                
-	                if(x>=0 && y>=0 && y<m && x<n && grid[x][y]==0){
+	                if(x>=0 && y>=0 && y<m && x<n && !grid[x][y] && !visited[x][y]){
 	                    ans[x][y]=it;
-	                    grid[x][y]=1;
+	                    visited[x][y]=1;
 	                    q.push({x,y});
 	                }
 	                
