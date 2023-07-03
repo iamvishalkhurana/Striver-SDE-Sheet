@@ -35,6 +35,7 @@ class Solution{
             }
             adj[alpha[x[j]]].push_back(alpha[y[j]]);
         }
+        
         vector<bool>visited(K,0);
         vector<int>topo;
         for(int i=0;i<K;i++){
@@ -46,8 +47,9 @@ class Solution{
         reverse(topo.begin(),topo.end());
         string ans="";
         for(int i=0;i<topo.size();i++){
-            ans.append(1,(char) 97+topo[i]);
+            ans+=(char) 'a'+topo[i];
         }
+        
         return ans;
     }
 };
