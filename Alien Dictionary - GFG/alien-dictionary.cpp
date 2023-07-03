@@ -20,24 +20,24 @@ class Solution{
 	}
 
     string findOrder(string dict[], int N, int K) {
-        map<char,int>alpha;
-        for(int i=0;i<K;i++){
-            alpha[(char) 97+i]=i;
-        }
-        
         vector<int>adj[K];
         
         for(int i=0;i<N-1;i++){
-            string x=dict[i],y=dict[i+1];
-            int j=0;
-            while(x[j]==y[j]){
-                j++;
+            string s1=dict[i],s2=dict[i+1];
+            int len = min(s1.size(), s2.size());
+             for (int idx = 0; idx < len; idx++)
+            {
+                if (s1[idx] != s2[idx])
+                {
+                    adj[s1[idx] - 'a'].push_back(s2[idx] - 'a');
+                    break;
+                }
             }
-            adj[alpha[x[j]]].push_back(alpha[y[j]]);
         }
         
         vector<bool>visited(K,0);
         vector<int>topo;
+        
         for(int i=0;i<K;i++){
             if(!visited[i]){
                 topological(adj,i,visited,topo);
@@ -47,7 +47,7 @@ class Solution{
         reverse(topo.begin(),topo.end());
         string ans="";
         for(int i=0;i<topo.size();i++){
-            ans+=(char) 'a'+topo[i];
+            ans=ans+ char(topo[i]+'a');
         }
         
         return ans;
