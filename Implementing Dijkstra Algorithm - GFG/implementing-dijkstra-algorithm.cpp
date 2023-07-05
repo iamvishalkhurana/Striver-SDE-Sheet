@@ -10,20 +10,19 @@ class Solution
     vector<int> dijkstra(int V, vector<vector<int>> adj[], int S)
     {
 
-         
-        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-
+        set<pair<int,int>>s;
         vector<int> distTo(V, INT_MAX);
 
         
         distTo[S] = 0;
-        pq.push({0, S});
+        s.insert({0,S});
 
-        while (!pq.empty())
+        while (s.size())
         {
-            int node = pq.top().second;
-            int dis = pq.top().first;
-            pq.pop();
+            auto i=*(s.begin());
+            int node=i.second;
+            int dis = i.first;
+            s.erase(i);
 
             for (auto it : adj[node])
             {
@@ -34,7 +33,7 @@ class Solution
                     distTo[v] = dis + w;
     
                    
-                    pq.push({dis + w, v});
+                    s.insert({dis + w, v});
                 }
             }
         }
