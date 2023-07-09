@@ -84,12 +84,10 @@ class Solution {
             }
         }
         int maxi=0;
-        int flag=0;
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
                 int curr=0;
                 if(grid[i][j]==0){
-                    flag=1;
                     curr++;
                     set<int>s;
                     for(int t=0;t<4;t++){
@@ -109,7 +107,7 @@ class Solution {
             }
             
         }
-        return flag==0 ? n*n : maxi;
+        return maxi==0 ? n*n : maxi;
     }
 };
 
