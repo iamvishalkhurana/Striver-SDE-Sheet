@@ -5,30 +5,78 @@ using namespace std;
 
 // } Driver Code Ends
 //User function Template for C++
-
+class DisjointSet{
+    private:
+        vector<int>rank,size,parent;
+    public:
+        DisjointSet(int n){
+            rank.resize(n+1,0);
+            size.resize(n+1,1);
+            parent.resize(n+1);
+            
+            for(int i=0;i<=n;i++) parent[i]=i;
+            
+        }
+        
+        int findU_parent(int n){
+            if(parent[n]==n){
+                return n;
+            }
+            return parent[n]=findU_parent(parent[n]);
+        }
+        
+        void unionByRank(int i,int j){
+            int ult_i=findU_parent(i);
+            int ult_j=findU_parent(j);
+            
+            if(ult_i == ult_j) return; 
+            
+            if(rank[ult_i] < rank[ult_j]){
+                parent[ult_i]=ult_j;
+            }
+            else if(rank[ult_i]>rank[ult_j]){
+                parent[ult_j]=ult_i;
+            }
+            
+            else{
+                parent[ult_j]=ult_i;
+                rank[ult_i]++;
+            }
+            
+        }
+        
+        void unionBySize(int i,int j){
+            int ult_i=findU_parent(i);
+            int ult_j=findU_parent(j);
+            
+            if(ult_i == ult_j) return;
+            
+            if(size[ult_i]<size[ult_j]){
+                parent[ult_i]=ult_j;
+                size[ult_j]+=size[ult_i];
+            }
+            else{
+                parent[ult_j]=ult_i;
+                size[ult_i]+=size[ult_j];
+            }
+        }
+};
 class Solution {
   public:
-    void dfs (vector<vector<int>>& adj,int i,vector<bool>&visited,int V){
-        if(visited[i]) return;
-        
-        visited[i]=1;
-        
-        for(int j=0;j<V;j++){
-            if(adj[i][j] && !visited[j]){
-                dfs(adj,j,visited,V);
-            }
-        }
-    }
     int numProvinces(vector<vector<int>> adj, int V) {
-        int provinces=0;
-        vector<bool>visited(V,0);
+        DisjointSet ds(V);
         for(int i=0;i<V;i++){
-            if(!visited[i]){
-                provinces++;
-                dfs(adj,i,visited,V);
+            for(int j=0;j<V;j++){
+                if(adj[i][j]==1){
+                    ds.unionBySize(i,j);
+                }
             }
         }
-        return provinces;
+        set<int>s;
+        for(int i=0;i<V;i++){
+            s.insert(ds.findU_parent(i));
+        }
+        return s.size();
         
     }
 };
