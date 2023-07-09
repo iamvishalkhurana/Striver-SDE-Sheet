@@ -73,19 +73,15 @@ class Solution {
         
         DisjointSet ds(n+m+1);
         
-        unordered_map<int,int>mapp;
-        
         for(int i=0;i<N;i++){
             int u=stones[i][0];
             int v=stones[i][1]+n+1;
             ds.unionBySize(u,v);
-            mapp[u]=1;
-            mapp[v]=1;
         }
         
         int cnt=0;
-        for(auto it:mapp){
-            if(ds.findU_parent(it.first)==it.first){
+        for(int i=0;i<m+n+1;i++){
+            if(ds.findU_parent(i)==i && ds.size[i]>1){
                 cnt++;
             }
         }
