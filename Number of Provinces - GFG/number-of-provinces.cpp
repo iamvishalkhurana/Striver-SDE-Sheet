@@ -72,11 +72,11 @@ class Solution {
                 }
             }
         }
-        set<int>s;
+        int cnt=0;
         for(int i=0;i<V;i++){
-            s.insert(ds.findU_parent(i));
+            if(ds.findU_parent(i)==i) cnt++;
         }
-        return s.size();
+        return cnt;
         
     }
 };
