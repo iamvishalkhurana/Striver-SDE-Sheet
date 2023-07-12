@@ -24,9 +24,23 @@ class Solution
     }
     int knapSack(int W, int wt[], int val[], int n) 
     { 
-       vector<vector<int>>dp(n,vector<int>(W+1,-1));
+       vector<int>dp(W+1,0);
        
-       return recursive_knapsack(W,wt,val,n,0,dp);
+       for(int i=n-1;i>=0;i--){
+           vector<int>curr(W+1,0);
+           for(int rem_wt=0;rem_wt<=W;rem_wt++){
+               int nottake=dp[rem_wt];
+               
+               int take=0;
+               
+               if(rem_wt>=wt[i]) take=val[i]+dp[rem_wt-wt[i]];
+               
+               curr[rem_wt]=max(take,nottake);
+           }
+           dp=curr;
+       }
+       
+       return dp[W];
     }
 };
 
