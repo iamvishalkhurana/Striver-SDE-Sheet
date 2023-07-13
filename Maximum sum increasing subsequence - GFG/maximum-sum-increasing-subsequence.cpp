@@ -9,23 +9,24 @@ class Solution{
 	public:
 	int maxSumIS(int arr[], int n)  
 	{  
-	    vector<vector<int>>dp(n+1,vector<int>(n+1,0));
+	    vector<int>dp(n+1,0);
 	    
 	    for(int i=n-1;i>=0;i--){
-	        
+	        vector<int>curr(n+1,0);
 	        for(int prev=i-1;prev >=-1 ;prev--){
 	            int take=0;
 	    
         	    if(prev==-1 || arr[i]>arr[prev]){
-        	        take=arr[i]+dp[i+1][i+1];
+        	        take=arr[i]+dp[i+1];
         	    }
         	    
-        	    int nottake=dp[i+1][prev+1];
+        	    int nottake=dp[prev+1];
         	    
-        	    dp[i][prev+1]=max(take,nottake);
+        	    curr[prev+1]=max(take,nottake);
 	        }
+	        dp=curr;
 	    }
-	    return dp[0][0];
+	    return dp[0];
 	}  
 };
 
