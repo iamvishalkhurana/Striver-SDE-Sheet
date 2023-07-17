@@ -9,30 +9,13 @@ using namespace std;
 
 class Solution {
   public:
-    bool jump(int A[],int i,int n,vector<int>&dp){
-        if(i==n-1) return true;
-        
-        if(dp[i]!=-1) return dp[i];
-        for(int j=1;j<=A[i];j++){
-            if(jump(A,i+j,n,dp)==true){
-                return dp[i]=true;
-            }
-        }
-        return dp[i]=false;
-    }
     int canReach(int A[], int N) {
-        vector<int>dp(N,0);
-        dp[N-1]=1;
+        int goal=N-1;
         for(int i=N-2;i>=0;i--){
+            if(i+A[i]>=goal) goal=i;
             
-            for(int j=1;j<=A[i];j++){
-                if(i+j<N && dp[i+j]==1){
-                    dp[i]=1;
-                    break;
-                }
-            }
         }
-        return dp[0];
+        return goal==0 ? 1 :0;
     }
 };
 
