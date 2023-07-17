@@ -9,18 +9,20 @@ using namespace std;
 
 class Solution {
   public:
-    bool jump(int A[],int i,int n){
-        if(i>=n-1) return true;
+    bool jump(int A[],int i,int n,vector<int>&dp){
+        if(i==n-1) return true;
         
+        if(dp[i]!=-1) return dp[i];
         for(int j=1;j<=A[i];j++){
-            if(jump(A,i+j,n)==true){
-                return true;
+            if(jump(A,i+j,n,dp)==true){
+                return dp[i]=true;
             }
         }
-        return false;
+        return dp[i]=false;
     }
     int canReach(int A[], int N) {
-        return jump(A,0,N);
+        vector<int>dp(N,-1);
+        return jump(A,0,N,dp);
     }
 };
 
