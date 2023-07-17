@@ -21,8 +21,18 @@ class Solution {
         return dp[i]=false;
     }
     int canReach(int A[], int N) {
-        vector<int>dp(N,-1);
-        return jump(A,0,N,dp);
+        vector<int>dp(N,0);
+        dp[N-1]=1;
+        for(int i=N-2;i>=0;i--){
+            
+            for(int j=1;j<=A[i];j++){
+                if(i+j<N && dp[i+j]==1){
+                    dp[i]=1;
+                    break;
+                }
+            }
+        }
+        return dp[0];
     }
 };
 
