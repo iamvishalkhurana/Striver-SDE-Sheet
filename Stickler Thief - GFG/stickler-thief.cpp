@@ -8,7 +8,7 @@ class Solution
 {
     public:
     int loot(int arr[],int i,vector<int>&dp){
-        if(i<0) return 0;
+        if(i < 0) return 0;
         
         if(dp[i]!=-1) return dp[i];
         
@@ -21,8 +21,19 @@ class Solution
     }
     int FindMaxSum(int arr[], int n)
     {
-        vector<int>dp(n,-1);
-        return loot(arr,n-1,dp);
+        vector<int>dp(n,0);
+        
+        dp[0]=arr[0];
+        
+        for(int i=1;i<n;i++){
+            int looted=arr[i];
+            if(i>1) looted+=dp[i-2];
+            
+            int left=dp[i-1];
+            dp[i]=max(left,looted);
+        }
+        
+        return dp[n-1];
     }
 };
 
