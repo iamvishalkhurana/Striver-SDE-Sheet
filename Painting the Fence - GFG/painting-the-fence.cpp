@@ -20,8 +20,15 @@ class Solution{
         return dp[n]=ans;
     }
     long long countWays(int n, int k){
-        vector<int>dp(n+1,-1);
-        return countways(n,k,dp);
+        vector<long long>dp(n+1,0);
+        dp[1]=k;
+        dp[2]=(k*k) % mod;
+        
+        for(int i=3;i<=n;i++){
+            long long ans= ( (dp[i-2]*(k-1))%mod + ( dp[i-1]*(k-1) )%mod) %mod;
+            dp[i]=ans;
+        }
+        return dp[n];
     }
 };
 
