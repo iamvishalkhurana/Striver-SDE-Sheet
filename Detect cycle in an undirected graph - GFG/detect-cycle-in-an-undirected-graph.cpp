@@ -4,37 +4,29 @@ using namespace std;
 
 // } Driver Code Ends
 class Solution {
-    private:
-        bool detect(vector<int>adj[],int i,vector<bool>&visited,int par){
-            visited[i]=1;
-            
-            for(auto x:adj[i]){
-                if(!visited[x]){
-                    if(detect(adj,x,visited,i)==true) return true;
-                }
-                else if(par!=x){
-                    return true;
-                }
+  public:
+    bool dfs(vector<int>adj[],int i,vector<int>&visited,int par){
+        visited[i]=1;
+        for(int t:adj[i]){
+            if(!visited[t]){
+                if(dfs(adj,t,visited,i)) return true;
             }
-            return false;
-        }
-    
-    
-    public:
-    
-        bool isCycle(int V, vector<int> adj[]) {
-            
-            vector<bool>visited(V,0);
-            
-            for(int i=0;i<V;i++){
-                if(!visited[i]){
-                    if(detect(adj,i,visited,-1)==true){
-                        return true;
-                    }
-                }
+            else if(t!=par){
+                return true;
             }
-            return false;
         }
+        return false;
+    }
+    bool isCycle(int V, vector<int> adj[]) {
+        
+        vector<int>visited(V,0);
+        for(int i=0;i<V;i++){
+            if(!visited[i]){
+                if(dfs(adj,i,visited,-1)==true) return true;
+            }
+        }
+        return false;
+    }
 };
 
 //{ Driver Code Starts.
