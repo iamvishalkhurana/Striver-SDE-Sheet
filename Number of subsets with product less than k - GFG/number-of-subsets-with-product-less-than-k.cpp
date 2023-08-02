@@ -9,25 +9,31 @@ using namespace std;
 class Solution {
   public:
   
-    int f(int ind,int productsoFar,int arr[],int n,int k)
+    int f(int ind,int productsoFar,int arr[],vector<vector<int>>&dp,int k)
+{
+    if(productsoFar > k)
+      return 0;
+      
+    if(ind < 0)
     {
-        
-        if(productsoFar > k) return 0;
-        
-        if(ind==n ) {
-            return productsoFar <=k ;
-        }
-        
-        int nottake=f(ind+1,productsoFar,arr,n,k);
-        
-        int take=f(ind+1,productsoFar*arr[ind],arr,n,k);
-        
-        return take + nottake;
+        return (productsoFar <= k);
     }
+    
+    if(dp[ind][productsoFar]!=-1) return dp[ind][productsoFar];
+    
+    int nottake=f(ind-1,productsoFar,arr,dp,k);
+    
+    int take=0;
+    
+    if(arr[ind]<=k) take=f(ind-1,productsoFar*arr[ind],arr,dp,k);
+    
+    return dp[ind][productsoFar]=take+nottake;
+}
 
     int numOfSubsets(int arr[], int n, int k) {
         
-        return f(0,1,arr,n,k)-1;
+        vector<vector<int>>dp(n,vector<int>(k+1,-1));
+        return f(n-1,1,arr,dp,k)-1;
     }
 };
 
