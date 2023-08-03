@@ -9,7 +9,7 @@ public:
 	    
 	    if(n==1) return 0;
 	    
-	    vector<int>dist(n+1,1e9);
+	    vector<int>dist(n+1,INT_MAX);
 	    
 	    int s=edges[0][0];
 	    dist[s]=0;
@@ -20,7 +20,7 @@ public:
 	            int v=edges[j][1];
 	            int len=edges[j][2];
 	            
-	            if(dist[u]!=1e9 && dist[u] + len < dist[v]){
+	            if(dist[u]!=INT_MAX && dist[u] + len < dist[v]){
 	                
 	                dist[v]=dist[u]+len;
 	                
@@ -34,7 +34,7 @@ public:
 	            int v=edges[j][1];
 	            int len=edges[j][2];
 	            
-	            if(dist[u]!=1e9 && dist[u]+len < dist[v]){
+	            if(dist[u]!=INT_MAX && dist[u]+len < dist[v]){
 	                return true;
 	            }
 	            
