@@ -10,20 +10,32 @@ using namespace std;
 
 class Solution{
 public:
-    void reverse_stack(stack<int>&st,vector<int>&x){
+    void reverse_stack(stack<int>&st,int x){
         if(st.empty()){
-            for(int i=0;i<x.size();i++){
-                st.push(x[i]);
-            }
+            
+            st.push(x);
+            
             return;
         }
         
-        int temp=st.top();st.pop();
-        x.push_back(temp);
+        int a=st.top();
+        
+        st.pop();
+        
         reverse_stack(st,x);
+        
+        st.push(a);
+        
     }
     void Reverse(stack<int> &St){
-        vector<int>x;
+        if(St.empty()) return ;
+        
+        int x=St.top();
+        
+        St.pop();
+        
+        Reverse(St);
+        
         reverse_stack(St,x);
     }
 };
