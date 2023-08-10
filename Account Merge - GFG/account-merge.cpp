@@ -5,103 +5,109 @@ using namespace std;
 
 // } Driver Code Ends
 //User function Template for C++
-class DisjointSet {
-    vector<int> rank, parent, size; 
-public: 
-    DisjointSet(int n){
+
+class DisjointSet{
+    private:
+        vector<int>rank,size,parent;
+    public:
+        DisjointSet(int n){
             rank.resize(n+1,0);
+            parent.resize(n+1,0);
             size.resize(n+1,1);
-            parent.resize(n+1);
             
             for(int i=0;i<=n;i++) parent[i]=i;
             
         }
         
-        int findU_parent(int n){
-            if(parent[n]==n){
-                return n;
-            }
-            return parent[n]=findU_parent(parent[n]);
+        int UltimateParent(int i){
+            if(parent[i]==i) return i;
+            
+            return parent[i]=UltimateParent(parent[i]);
         }
         
-        void unionByRank(int i,int j){
-            int ult_i=findU_parent(i);
-            int ult_j=findU_parent(j);
+        void UnionBySize(int i,int j){
+            int ui=UltimateParent(i);
+            int uj=UltimateParent(j);
             
-            if(ult_i == ult_j) return; 
+            if(ui==uj) return;
             
-            if(rank[ult_i] < rank[ult_j]){
-                parent[ult_i]=ult_j;
+            if(size[ui] < size[uj]){
+                parent[ui]=uj;
+                size[uj]+=size[ui];
             }
-            else if(rank[ult_i]>rank[ult_j]){
-                parent[ult_j]=ult_i;
-            }
-            
             else{
-                parent[ult_j]=ult_i;
-                rank[ult_i]++;
+                parent[uj]=ui;
+                size[ui]+=size[uj];
             }
-            
         }
         
-        void unionBySize(int i,int j){
-            int ult_i=findU_parent(i);
-            int ult_j=findU_parent(j);
+        void UnionByRank(int i,int j){
+            int ui=UltimateParent(i);
+            int uj=UltimateParent(j);
             
-            if(ult_i == ult_j) return;
+            if(ui==uj) return;
             
-            if(size[ult_i]<size[ult_j]){
-                parent[ult_i]=ult_j;
-                size[ult_j]+=size[ult_i];
+            if(rank[ui] < rank[uj]){
+                parent[ui]=uj;
+            }
+            else if(rank[ui] > rank[uj]){
+                parent[uj]=ui;
             }
             else{
-                parent[ult_j]=ult_i;
-                size[ult_i]+=size[ult_j];
+                parent[uj]=ui;
+                rank[ui]++;
             }
         }
-}; 
+        
+};
+
 class Solution{
   public:
     vector<vector<string>> accountsMerge(vector<vector<string>> &accounts) {
-        int n=accounts.size();
-        
-        DisjointSet ds(n);
-        
         map<string,int>mapp;
         
-        for(int i=0;i<n;i++){
+        int V=accounts.size();
+        
+        DisjointSet ds(V);
+        
+        for(int i=0;i<V;i++){
             for(int j=1;j<accounts[i].size();j++){
-                string mail=accounts[i][j];
-                if(mapp.find(mail)==mapp.end()){
-                    mapp[mail]=i;
+                string it=accounts[i][j];
+                if(mapp.find(it)==mapp.end()){
+                    mapp[it]=i;
                 }
                 else{
-                    ds.unionBySize(i,mapp[mail]);
+                    ds.UnionBySize(i,mapp[it]);
                 }
             }
         }
-        
-        vector<string>ans[n];
+        vector<string>adj[V];
         for(auto it:mapp){
             int x=it.second;
-            int t=ds.findU_parent(x);
-            ans[t].push_back(it.first);
+            int t=ds.UltimateParent(x);
+            adj[t].push_back(it.first);
+            
         }
         
+        vector<vector<string>>ans;
         
-        vector<vector<string>>sol;
-        for(int i=0;i<n;i++){
+        for(int i=0;i<V;i++){
             
-            if(ans[i].size()==0) continue;
+            if(adj[i].size()==0) continue;
             
-            sort(ans[i].begin(),ans[i].end());
             vector<string>temp;
+            
             temp.push_back(accounts[i][0]);
-            temp.insert(temp.begin()+1,ans[i].begin(),ans[i].end());
-            sol.push_back(temp);
+            
+            sort(adj[i].begin(),adj[i].end());
+            
+            temp.insert(temp.begin()+1,adj[i].begin(),adj[i].end());
+            
+            ans.push_back(temp);
             
         }
-        return sol;
+        return ans;
+        
     }
 };
 
