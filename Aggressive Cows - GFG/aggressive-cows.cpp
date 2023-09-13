@@ -25,7 +25,7 @@ public:
     
         sort(stalls.begin(),stalls.end());
         
-        int low=0,high=stalls[n-1]-stalls[0];
+        int low=1,high=stalls[n-1]-stalls[0];
         int ans;
         
         while(low<=high){
