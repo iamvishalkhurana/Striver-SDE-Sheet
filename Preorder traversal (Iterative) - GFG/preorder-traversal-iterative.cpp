@@ -99,34 +99,32 @@ class Solution{
     public:
     vector<int> preOrder(Node* root)
     {
-        vector<int>inorder;
-
-        if(!root) return inorder;
-
+        vector<int>preorder;
         Node* curr=root;
+        
         while(curr){
-            
             if(!curr->left){
-                inorder.push_back(curr->data);
+                preorder.push_back(curr->data);
                 curr=curr->right;
             }
             else{
-                Node* prev=curr->left;
-                while(prev->right && prev->right!=curr){
-                    prev=prev->right;
+                Node* next=curr->left;
+                while(next->right && next->right!=curr){
+                    next=next->right;
                 }
-                if(!prev->right){
-                    inorder.push_back(curr->data);
-                    prev->right=curr;
+                
+                if(!next->right){
+                    preorder.push_back(curr->data);
+                    next->right=curr;
                     curr=curr->left;
                 }
                 else{
-                    prev->right=NULL;
+                    next->right=NULL;
                     curr=curr->right;
                 }
             }
         }
-        return inorder;
+        return preorder;
     }
 };
 
