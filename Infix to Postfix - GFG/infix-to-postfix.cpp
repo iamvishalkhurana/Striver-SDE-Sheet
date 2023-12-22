@@ -43,13 +43,12 @@ class Solution {
                     st.push(s[i]);
                 }
                 
-                else if(precedence(st.top())>precedence(s[i])){
+                else{
                     while(!st.empty() && precedence(st.top())>=precedence(s[i])){
                         postfix+=st.top();st.pop();
                     }
                     st.push(s[i]);
                 }
-                
                 
             }
             
