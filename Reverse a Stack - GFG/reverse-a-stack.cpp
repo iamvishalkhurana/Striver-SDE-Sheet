@@ -10,33 +10,24 @@ using namespace std;
 
 class Solution{
 public:
-    void reverse_stack(stack<int>&st,int x){
+    void reverseForEach(stack<int>&st,int x){
         if(st.empty()){
-            
             st.push(x);
-            
             return;
         }
-        
-        int a=st.top();
-        
-        st.pop();
-        
-        reverse_stack(st,x);
-        
-        st.push(a);
+        int temp=st.top();st.pop();
+        reverseForEach(st,x);
+        st.push(temp);
         
     }
     void Reverse(stack<int> &St){
         if(St.empty()) return ;
         
-        int x=St.top();
-        
-        St.pop();
+        int t=St.top();St.pop();
         
         Reverse(St);
         
-        reverse_stack(St,x);
+        reverseForEach(St,t);
     }
 };
 
